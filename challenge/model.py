@@ -1,6 +1,11 @@
 import pandas as pd
 
 from typing import Tuple, Union, List
+from .preprocessing import (
+    create_ohe,
+    create_target,
+)
+
 
 class DelayModel:
 
@@ -12,8 +17,8 @@ class DelayModel:
     def preprocess(
         self,
         data: pd.DataFrame,
-        target_column: str = None
-    ) -> Union(Tuple[pd.DataFrame, pd.DataFrame], pd.DataFrame):
+        target_column: str = None,
+    ) -> Union[Tuple[pd.DataFrame, pd.DataFrame], pd.DataFrame]:
         """
         Prepare raw data for training or predict.
 
@@ -26,7 +31,13 @@ class DelayModel:
             or
             pd.DataFrame: features.
         """
-        return
+        df_features = create_ohe(data)
+
+        if target_column:
+            df_target = create_target(data, target_column)
+            return (df_features, df_target)
+        else:
+            return df_features
 
     def fit(
         self,
