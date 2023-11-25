@@ -3,7 +3,12 @@ from datetime import datetime
 import pandas as pd
 import numpy as np
 
-from .constants import DATETIME_FORMAT, THRESHOLD_MINUTES, CATEGORICAL_COLS, FEATURES_COLS
+from .constants import (
+    DATETIME_FORMAT,
+    THRESHOLD_MINUTES,
+    CATEGORICAL_COLS,
+    FEATURES_COLS,
+)
 
 
 def create_ohe(data: pd.DataFrame) -> pd.DataFrame:
@@ -12,7 +17,7 @@ def create_ohe(data: pd.DataFrame) -> pd.DataFrame:
 
     Args:
         data: raw data.
-    
+
     Returns:
         features (pd.DataFrame): the one hot encoding features
     """
@@ -54,7 +59,7 @@ def create_min_diff(data: pd.DataFrame, name_col: str = "min_diff") -> pd.DataFr
     Returns:
         data (pd.DataFrame): preprocessed data.
     """
-    data[name_col] = data.apply(get_min_diff, axis = 1)
+    data[name_col] = data.apply(get_min_diff, axis=1)
     return data
 
 
@@ -79,4 +84,3 @@ def create_target(data: pd.DataFrame, target_col_name: str = "target") -> pd.Dat
     data = data.drop(columns="min_diff")
 
     return df_target
-

@@ -10,7 +10,7 @@ CATEGORICAL_COLS = [
 
 # Training and prediction
 FEATURES_COLS = [
-    "OPERA_Latin American Wings", 
+    "OPERA_Latin American Wings",
     "MES_7",
     "MES_10",
     "OPERA_Grupo LATAM",
