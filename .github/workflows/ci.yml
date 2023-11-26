@@ -26,7 +26,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       REGION_DOCKER: us-east1
-      GCR_REPO_URI: $REGION_DOCKER.pkg.dev/scenic-helper-406317/flight-repo/
+      CONTAINER_NAME: flight-model
+      GCR_REPO_URI: $REGION_DOCKER-docker.pkg.dev/scenic-helper-406317/flight-repo/$CONTAINER_NAME
     steps:
     - uses: actions/checkout@v4
     - name: Google authentication
