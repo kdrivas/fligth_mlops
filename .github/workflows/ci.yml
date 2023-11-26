@@ -1,10 +1,9 @@
 name: Github CI
 
-on: [push]
-#  push:
-#    branches:
-#      - main
-#      - develop
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   test:
@@ -23,10 +22,11 @@ jobs:
       run: pytest --cov=challenge tests/api
   
   build_and_push:
+    needs: test
     runs-on: ubuntu-latest
     env:
       REGION_DOCKER: us-east1
-      CONTAINER_NAME: flight-model
+      IMAGE_NAME: flight-model
       REPO_NAME: flight-repo
       GCP_PROJECT_ID: scenic-helper-406317
     steps:
@@ -41,6 +41,6 @@ jobs:
       run: |-
         gcloud auth configure-docker $REGION_DOCKER-docker.pkg.dev --quiet
     - name: Build image
-      run: docker build . -t $REGION_DOCKER-docker.pkg.dev/scenic-helper-406317/flight-repo/$CONTAINER_NAME
+      run: docker build . -t $REGION_DOCKER-docker.pkg.dev/$GCP_PROJECT_ID/$REPO_NAME/$IMAGE_NAME
     - name: Push image to GCR
-      run: docker push $REGION_DOCKER-docker.pkg.dev/$GCP_PROJECT_ID/$REPO_NAME/$CONTAINER_NAME
+      run: docker push $REGION_DOCKER-docker.pkg.dev/$GCP_PROJECT_ID/$REPO_NAME/$IMAGE_NAME
