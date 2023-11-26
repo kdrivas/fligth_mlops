@@ -24,9 +24,16 @@ jobs:
   
   build_and_push:
     runs-on: ubuntu-latest
+    env:
+      REGION_DOCKER: us-east1
     steps:
     - uses: actions/checkout@v4
     - name: Google authentication
       uses: google-github-actions/auth@v1
       with:
         credentials_json: "${{ secrets.SERVICE_ACCOUNT_CREDENTIAL }}"
+    - name: Install gcloud
+      uses: google-github-actions/setup-gcloud@v1
+    - name: "Docker set up"
+      run: |-
+        gcloud auth configure-docker ${{ env.REGION_DOCKER }}-docker.pkg.dev --quiet
