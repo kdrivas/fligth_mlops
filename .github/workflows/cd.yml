@@ -23,4 +23,4 @@ jobs:
       uses: google-github-actions/deploy-cloudrun@v1
       with:
         service: flight-model
-        image: $REGION_DOCKER-docker.pkg.dev/$GCP_PROJECT_ID/$REPO_NAME/$IMAGE_NAME:latest
+        image: us-central1-docker.pkg.dev/scenic-helper-406317/flight-repo/flight-model:latest
