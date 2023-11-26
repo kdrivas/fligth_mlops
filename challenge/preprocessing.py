@@ -3,7 +3,7 @@ from datetime import datetime
 import pandas as pd
 import numpy as np
 
-from .constants import (
+from challenge.constants import (
     DATETIME_FORMAT,
     THRESHOLD_MINUTES,
     OHE_VALUES,

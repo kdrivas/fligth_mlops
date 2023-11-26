@@ -1,7 +1,7 @@
 import pandas as pd
 from typing import List
 
-from .constants import (
+from challenge.constants import (
     VALID_VALUES,
     OHE_VALUES,
 )
