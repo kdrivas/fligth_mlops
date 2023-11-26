@@ -1,4 +1,5 @@
 import pandas as pd
+import pickle
 
 import xgboost as xgb
 
@@ -13,8 +14,28 @@ class DelayModel:
     def __init__(self):
         self._model = None  # Model should be saved in this attribute.
 
-    def init_model(self, model_path: str):
-        self._model = model_path
+    def init_model(self, model_path: str) -> None:
+        """
+        Load the model
+
+        Args:
+            model_path: the path where the model was saved.
+        """
+        with open(model_path, "rb") as f:
+            self._model = pickle.load(f)
+
+    def save_model(self, model_path: str) -> None:
+        """
+        Save the trained model
+
+        Args:
+            model_path: the path where the model will b saved.
+        """
+        if self._model is not None:
+            with open(model_path, "wb") as f:
+                pickle.dump(self._model, f)
+        else:
+            raise Exception("Model was not trained.")
 
     def preprocess(
         self,
