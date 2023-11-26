@@ -1,0 +1,26 @@
+name: Github CI
+
+on: [push]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      REGION_DOCKER: us-central1
+      IMAGE_NAME: flight-model
+      REPO_NAME: flight-repo
+      GCP_PROJECT_ID: scenic-helper-406317
+    steps:
+    - uses: actions/checkout@v4
+    - name: Google authentication
+      uses: google-github-actions/auth@v1
+      with:
+        credentials_json: "${{ secrets.SERVICE_ACCOUNT_CREDENTIAL }}"
+    - name: Install gcloud
+      uses: google-github-actions/setup-gcloud@v1
+
+    - id: Deploy to cloud run
+      uses: google-github-actions/deploy-cloudrun@v1
+      with:
+        service: flight-model
+        image: $REGION_DOCKER-docker.pkg.dev/$GCP_PROJECT_ID/$REPO_NAME/$IMAGE_NAME
