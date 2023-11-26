@@ -1,15 +1,11 @@
 name: Github CD
 
-on: [push]
+on: workflow_dispatch
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    env:
-      REGION_DOCKER: us-central1
-      IMAGE_NAME: flight-model
-      REPO_NAME: flight-repo
-      GCP_PROJECT_ID: scenic-helper-406317
+    if: github.ref == 'refs/heads/main'
     steps:
     - uses: actions/checkout@v4
     - name: Google authentication
