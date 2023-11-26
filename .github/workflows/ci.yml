@@ -1,0 +1,46 @@
+name: Github CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    - name: Install dependencies
+      run: pip install -r requirements.txt -r requirements-test.txt
+    - name: Run model tests
+      run: pytest --cov=challenge tests/model
+    - name: Run api tests
+      run: pytest --cov=challenge tests/api
+  
+  build_and_push:
+    needs: test
+    runs-on: ubuntu-latest
+    env:
+      REGION_DOCKER: us-central1
+      IMAGE_NAME: flight-model
+      REPO_NAME: flight-repo
+      GCP_PROJECT_ID: scenic-helper-406317
+    steps:
+    - uses: actions/checkout@v4
+    - name: Google authentication
+      uses: google-github-actions/auth@v1
+      with:
+        credentials_json: "${{ secrets.SERVICE_ACCOUNT_CREDENTIAL }}"
+    - name: Install gcloud
+      uses: google-github-actions/setup-gcloud@v1
+    - name: "Docker set up"
+      run: |-
+        gcloud auth configure-docker $REGION_DOCKER-docker.pkg.dev --quiet
+    - name: Build image
+      run: docker build . -t $REGION_DOCKER-docker.pkg.dev/$GCP_PROJECT_ID/$REPO_NAME/$IMAGE_NAME
+    - name: Push image to GCR
+      run: docker push $REGION_DOCKER-docker.pkg.dev/$GCP_PROJECT_ID/$REPO_NAME/$IMAGE_NAME
