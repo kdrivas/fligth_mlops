@@ -22,5 +22,5 @@ jobs:
     - name: Deploy to cloud run
       uses: google-github-actions/deploy-cloudrun@v1
       with:
-        service: flight-model
+        service: flight-mle
         image: us-central1-docker.pkg.dev/scenic-helper-406317/flight-repo/flight-model:latest
