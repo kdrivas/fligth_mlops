@@ -21,3 +21,12 @@ jobs:
       run: pytest --cov=challenge tests/model
     - name: Run api tests
       run: pytest --cov=challenge tests/api
+  
+  build_and_push:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Google authentication
+      uses: google-github-actions/auth@v1.2
+      with:
+        credentials_json: "${{ secrets.SERVICE_ACCOUNT_CREDENTIAL }}"
