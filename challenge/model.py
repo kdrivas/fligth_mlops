@@ -1,5 +1,8 @@
 import pandas as pd
 
+from sklearn.model_selection import train_test_split
+import xgboost as xgb
+
 from typing import Tuple, Union, List
 from .preprocessing import (
     create_ohe,
@@ -10,6 +13,9 @@ from .preprocessing import (
 class DelayModel:
     def __init__(self):
         self._model = None  # Model should be saved in this attribute.
+
+    def init_model(self, model_path: str):
+        self._model = model_path
 
     def preprocess(
         self,
@@ -44,7 +50,10 @@ class DelayModel:
             features (pd.DataFrame): preprocessed data.
             target (pd.DataFrame): target.
         """
-        return
+        self._model = xgb.XGBClassifier(
+            random_state=1, learning_rate=0.01, scale_pos_weight=4.4402380952380955
+        )
+        self._model.fit(features, target)
 
     def predict(self, features: pd.DataFrame) -> List[int]:
         """
@@ -56,4 +65,7 @@ class DelayModel:
         Returns:
             (List[int]): predicted targets.
         """
-        return
+        if self._model == None:
+            return [0] * len(features)
+        else:
+            return self._model.predict(features)
