@@ -4,7 +4,7 @@ import pickle
 import xgboost as xgb
 
 from typing import Tuple, Union, List
-from .preprocessing import (
+from challenge.preprocessing import (
     create_ohe,
     create_target,
 )

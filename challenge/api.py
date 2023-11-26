@@ -1,14 +1,17 @@
 from fastapi import Request, FastAPI, HTTPException
+import uvicorn
 import pandas as pd
+import os
 
-from .model import DelayModel
-from .constants import OHE_VALUES, FEATURES_COLS
-from .data_validation import get_invalid_columns
+from challenge.model import DelayModel
+from challenge.constants import OHE_VALUES, FEATURES_COLS
+from challenge.data_validation import get_invalid_columns
 
 app = FastAPI()
 
 model = DelayModel()
-model.init_model("artifacts/model.pkl")
+model_path = os.environ.get("MODEL_PATH", "artifacts/model.pkl")
+model.init_model(model_path)
 
 
 @app.get("/health", status_code=200)
