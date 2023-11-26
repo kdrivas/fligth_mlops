@@ -8,7 +8,7 @@ from .data_validation import get_invalid_columns
 app = FastAPI()
 
 model = DelayModel()
-# model.init_model()
+model.init_model("artifacts/model.pkl")
 
 
 @app.get("/health", status_code=200)
@@ -36,6 +36,6 @@ async def post_predict(request: Request) -> dict:
         )
 
     df_features = model.preprocess(df_data)
-    prediction = model.predict(df_features)
+    prediction = model.predict(df_features).tolist()
 
     return {"predict": prediction}
