@@ -1,6 +1,9 @@
 name: Github CI
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   test:
@@ -19,6 +22,7 @@ jobs:
       run: pytest --cov=challenge tests/api
   
   build_and_push:
+    needs: test
     runs-on: ubuntu-latest
     env:
       REGION_DOCKER: us-central1
