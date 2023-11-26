@@ -27,7 +27,8 @@ jobs:
     env:
       REGION_DOCKER: us-east1
       CONTAINER_NAME: flight-model
-      GCR_REPO_URI: $REGION_DOCKER-docker.pkg.dev/scenic-helper-406317/flight-repo/$CONTAINER_NAME
+      REPO_NAME: flight-repo
+      GCP_PROJECT_ID: scenic-helper-406317
     steps:
     - uses: actions/checkout@v4
     - name: Google authentication
@@ -40,6 +41,6 @@ jobs:
       run: |-
         gcloud auth configure-docker $REGION_DOCKER-docker.pkg.dev --quiet
     - name: Build image
-      run: docker build . -t $GCR_REPO_URI
+      run: docker build . -t $REGION_DOCKER-docker.pkg.dev/scenic-helper-406317/flight-repo/$CONTAINER_NAME
     - name: Push image to GCR
-      run: docker push $GCR_REPO_URI
+      run: docker push $REGION_DOCKER-docker.pkg.dev/$GCP_PROJECT_ID/$REPO_NAME/$CONTAINER_NAME
