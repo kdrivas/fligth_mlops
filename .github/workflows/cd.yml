@@ -23,4 +23,4 @@ jobs:
       uses: google-github-actions/deploy-cloudrun@v1
       with:
         service: flight-model
-        image: $REGION_DOCKER-docker.pkg.dev/$GCP_PROJECT_ID/$REPO_NAME/$IMAGE_NAME
+        image: $REGION_DOCKER-docker.pkg.dev/$GCP_PROJECT_ID/$REPO_NAME/$IMAGE_NAME:latest
