@@ -25,7 +25,7 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     env:
-      REGION_DOCKER: us-east1
+      REGION_DOCKER: us-central1
       IMAGE_NAME: flight-model
       REPO_NAME: flight-repo
       GCP_PROJECT_ID: scenic-helper-406317
