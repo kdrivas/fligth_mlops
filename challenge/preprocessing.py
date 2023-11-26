@@ -6,7 +6,7 @@ import numpy as np
 from .constants import (
     DATETIME_FORMAT,
     THRESHOLD_MINUTES,
-    CATEGORICAL_COLS,
+    OHE_VALUES,
     FEATURES_COLS,
 )
 
@@ -21,12 +21,10 @@ def create_ohe(data: pd.DataFrame) -> pd.DataFrame:
     Returns:
         features (pd.DataFrame): the one hot encoding features
     """
-    features = pd.get_dummies(data[CATEGORICAL_COLS[0]], prefix=CATEGORICAL_COLS[0])
-    for col in CATEGORICAL_COLS[1:]:
-        features = pd.concat(
-            [features, pd.get_dummies(data[col], prefix=col)],
-            axis=1,
-        )
+    features = pd.DataFrame(columns=FEATURES_COLS)
+    for col in OHE_VALUES:
+        for v in OHE_VALUES[col]:
+            features[f"{col}_{v}"] = (data[col] == v).astype(int)
 
     return features[FEATURES_COLS]
 
