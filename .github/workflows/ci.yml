@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - develop
 
 jobs:
   test:
@@ -23,6 +24,7 @@ jobs:
   
   build_and_push:
     needs: test
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     env:
       REGION_DOCKER: us-central1
