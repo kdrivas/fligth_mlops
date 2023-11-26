@@ -26,6 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       REGION_DOCKER: us-east1
+      GCR_REPO_URI: ${{ env.REGION_DOCKER }}.pkg.dev/scenic-helper-406317/flight-repo/
     steps:
     - uses: actions/checkout@v4
     - name: Google authentication
@@ -37,3 +38,7 @@ jobs:
     - name: "Docker set up"
       run: |-
         gcloud auth configure-docker ${{ env.REGION_DOCKER }}-docker.pkg.dev --quiet
+    - name: Build image
+      run: docker build . -t ${{ env.GCR_REPO_URI }}
+    - name: Push image to GCR
+      run: docker push ${{ env.GCR_REPO_URI }}
