@@ -3,9 +3,9 @@ import uvicorn
 import pandas as pd
 import os
 
-from challenge.model import DelayModel
 from challenge.constants import OHE_VALUES, FEATURES_COLS
 from challenge.data_validation import get_invalid_columns
+from challenge.model import DelayModel
 
 app = FastAPI()
 
@@ -28,14 +28,16 @@ async def post_predict(request: Request) -> dict:
     if list(df_data.columns) != list(OHE_VALUES.keys()):
         raise HTTPException(
             status_code=400,
-            detail=f"The following columns are missing: {list(df_data.columns) - OHE_VALUES.keys()}",
+            detail="The following columns are missing:"
+            f" {list(df_data.columns) - OHE_VALUES.keys()}",
         )
 
     # Validate if the values are the expected ones
     if len(get_invalid_columns(df_data)):
         raise HTTPException(
             status_code=400,
-            detail=f"Some of the columns don't contain the expected categories: {get_invalid_columns}",
+            detail="Some of the columns don't contain the expected"
+            f" categories: {get_invalid_columns}",
         )
 
     df_features = model.preprocess(df_data)
