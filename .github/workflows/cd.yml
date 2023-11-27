@@ -1,0 +1,22 @@
+name: Github CD
+
+on: workflow_dispatch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+    - uses: actions/checkout@v4
+    - name: Google authentication
+      uses: google-github-actions/auth@v1
+      with:
+        credentials_json: "${{ secrets.SERVICE_ACCOUNT_CREDENTIAL }}"
+    - name: Install gcloud
+      uses: google-github-actions/setup-gcloud@v1
+
+    - name: Deploy to cloud run
+      uses: google-github-actions/deploy-cloudrun@v1
+      with:
+        service: flight-mle
+        image: us-central1-docker.pkg.dev/scenic-helper-406317/flight-repo/flight-model:latest

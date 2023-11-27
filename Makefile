@@ -28,7 +28,7 @@ STRESS_URL = http://127.0.0.1:8000
 stress-test:
 	# change stress url to your deployed app 
 	mkdir reports || true
-	locust -f tests/stress/api_stress.py --print-stats --html reports/stress-test.html --run-time 60s --headless --users 100 --spawn-rate 1 -H $(STRESS_URL)
+	locust -f tests/stress/api_stress.py --print-stats --html reports/stress-test.html --run-time 60s --headless --users 100 --spawn-rate 1 -H https://flight-mle-model-gateway-dz618ve.uc.gateway.dev
 
 .PHONY: model-test
 model-test:			## Run tests and coverage
