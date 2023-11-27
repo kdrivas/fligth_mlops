@@ -1,5 +1,6 @@
 # Folder structure
 
+```
 .
 ├── Dockerfile
 ├── Makefile
@@ -32,9 +33,25 @@
 └── workflows
     ├── cd.yml
     └── ci.yml
+```
 
 # API 
 - The API was developed using Cloud Run and Api gateway
+- The Address is *https://flight-mle-model-gateway-dz618ve.uc.gateway.dev*
+### Health check
+Check if the service is up
+
+**URL** : `https://flight-mle-model-gateway-dz618ve.uc.gateway.dev/health`
+
+**Method** : `GET`
+
+### Prediction
+Get the prediction for the data
+
+**URL** : `pttps://flight-mle-model-gateway-dz618ve.uc.gateway.dev/predict`
+
+**Method** : `POST`
+
 
 # Improvements
 - I would like to develop a training pipeline using airflow or kubeflow
